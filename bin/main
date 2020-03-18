@@ -5,12 +5,17 @@ puts
 puts 'Do you want to play?'
 puts 'Type Y for Yes and Type N for No'
 
+# User will choose if he wants to play or not
+# The program will keep asking for an option that is valid
+# either to start the game or to end it. 
+
 while true
   user_option = gets.chomp()
+  user_option.capitalize!
   if user_option === 'Y'
     p 'Game is ON!'
     break
-  elsif user_option === 'N'
+  elsif user_option === 'N' 
     p 'Thank you. See you next time.'
     exit
   else
@@ -19,5 +24,18 @@ while true
   
 end
 
+# Game started - It asks for the Players Names.
+
 puts 'Player, what is your name?'
 player_one = gets.chomp()
+puts 'What is the name of your rival?'
+player_two = gets.chomp()
+
+print "\nThe game will be #{player_one} versus #{player_two}\n"
+print "Movement options are numbers positioned between 1 and 9 on the board.\n\n"
+
+puts "#{player_one}, what is your move?"
+p1_move = gets.chomp()
+puts "#{player_two}, what is your move?"
+p2_move = gets.chomp()
+
