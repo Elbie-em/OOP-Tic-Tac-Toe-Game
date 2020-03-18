@@ -31,11 +31,22 @@ player_one = gets.chomp()
 puts 'What is the name of your rival?'
 player_two = gets.chomp()
 
+# Description of player & Pieces to take
+
 print "\nThe game will be #{player_one} versus #{player_two}\n"
-print "Movement options are numbers positioned between 1 and 9 on the board.\n\n"
+print "#{player_one} is X and #{player_two} is O \n\n"
 
-puts "#{player_one}, what is your move?"
-p1_move = gets.chomp()
-puts "#{player_two}, what is your move?"
-p2_move = gets.chomp()
+# Dummy gameloop : Asks both players for moves until winner is found
+# NOTE: This loop does not consist of any game logic
+has_won = true
+count = 0
+while has_won 
+  puts "#{player_one}, what is your move?"
+  p1_move = gets.chomp
+  puts "#{player_two}, what is your move?"
+  p2_move = gets.chomp
+  count += 1
+  has_won = false if count == 5
+end
 
+p "DRAW game....Thank you for playing"
