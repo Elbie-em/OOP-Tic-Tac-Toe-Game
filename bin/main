@@ -1,16 +1,68 @@
 #!/usr/bin/env ruby
 # Game Board
-logo_board = [['1','|','2','|','3'],['4','|','5','|','6'],['7','|','8','|','9']]
-instr_board = [['X','|',' ','|',' '],[' ','|',' ','|','O'],[' ','|',' ','|',' ']]
+
+logo_board = [['1', '|', '2', '|', '3'], ['4', '|', '5', '|', '6'], ['7', '|', '8', '|', '9']]
+instr_board = [['X', '|', ' ', '|', ' '], [' ', '|', ' ', '|', 'O'], [' ', '|', ' ', '|', ' ']]
+game_board = [[' ', '|', ' ', '|', ' '], [' ', '|', ' ', '|', ' '], [' ', '|', ' ', '|', ' ']]
 
 def print_game_board(board)
-  for row in board
-    print "".center(15)
-    for column in row
+  board.each do |row|
+    print ''.center(15)
+    row.each do |column|
       print column
     end
     puts
   end
+end
+
+def choose_option(option)
+  loop do
+    option.capitalize!
+    if option === 'Y'
+      p 'Game is ON!'
+      break
+    elsif option === 'N'
+      p 'Thank you. See you next time.'
+      exit
+    else
+      p 'Wrong option! Please select Y or N.'
+    end
+  end
+end
+
+def player_turn(board, index, player)
+  param = ''
+
+  if player === $player_one
+    param = 'X'
+  elsif player === $player_two
+    param = 'O'
+  end
+
+  case index
+  when 1
+    board[0][0] = param
+  when 2
+    board[0][2] = param
+  when 3
+    board[0][4] = param
+  when 4
+    board[1][0] = param
+  when 5
+    board[1][2] = param
+  when 6
+    board[1][4] = param
+  when 7
+    board[2][0] = param
+  when 8
+    board[2][2] = param
+  when 9
+    board[2][4] = param
+  end
+end
+
+def test_play?(play_made)
+  play_made >= 1 && play_made <= 9 ? true : false
 end
 
 puts 'TIC-TAC-TOE GAME'.center(40)
@@ -20,69 +72,47 @@ puts
 puts 'Do you want to play?'
 puts 'Type Y for Yes and Type N for No'
 
+starting_option = gets.chomp
+choose_option(starting_option)
+
 # User will choose if he wants to play or not
 # The program will keep asking for an option that is valid
-# either to start the game or to end it. 
-
-while true
-  user_option = gets.chomp()
-  user_option.capitalize!
-  if user_option === 'Y'
-    p 'Game is ON!'
-    break
-  elsif user_option === 'N' 
-    p 'Thank you. See you next time.'
-    exit
-  else
-    p 'Wrong option! Please select Y or N.'
-  end
-end
+# either to start the game or to end it.
 
 print "Players' move should correspond to number positions in the board shown above.\n\n"
-puts "e.g if player is X and plays 1, X is placed in position 1"
-puts "e.g if player is O and plays 6, O is placed in position 6"
+puts 'e.g if player is X and plays 1, X is placed in position 1'
+puts 'e.g if player is O and plays 6, O is placed in position 6'
 print_game_board(instr_board)
 puts 'Do you want to continue?'
 puts 'Type Y for Yes and Type N for No'
-while true
-  option = gets.chomp()
-  option.capitalize!
-  if option === 'Y'
-    break
-  elsif option === 'N' 
-    p 'Thank you. See you next time.'
-    exit
-  else
-    p 'Wrong option! Please select Y or N.'
-  end
-end
+
+continue_option = gets.chomp
+choose_option(continue_option)
 
 # Game started - It asks for the Players Names.
 
 puts 'Player, what is your name?'
-player_one = gets.chomp()
+$player_one = gets.chomp
 puts 'What is the name of your rival?'
-player_two = gets.chomp()
+$player_two = gets.chomp
 
 # Description of player & Pieces to take
 
-print "\nThe game will be #{player_one} versus #{player_two}\n"
+print "\nThe game will be #{$player_one} versus #{$player_two}\n"
 
+print_game_board(game_board)
 
+loop do
+  p 'Player one move'
+  p1_move = Integer(gets.chomp)
+  p test_play?(p1_move) ? '' : 'Invalid Move'
 
-
-
-=begin
-# Dummy gameloop : Asks both players for moves until winner is found
-# NOTE: This loop does not consist of any game logic
-has_won = true
-count = 0
-while has_won 
-  puts "#{player_one}, what is your move?"
-  p1_move = gets.chomp
-  puts "#{player_two}, what is your move?"
-  p2_move = gets.chomp
-  count += 1
-  has_won = false if count == 5
+  player_turn(game_board, p1_move, $player_one)
+  print_game_board(game_board)
+  p 'Player two move'
+  p2_move = Integer(gets.chomp)
+  p test_play?(p2_move) ? '' : 'Invalid Move'
+  player_turn(game_board, p2_move, $player_two)
+  print_game_board(game_board)
+  break
 end
-=end
