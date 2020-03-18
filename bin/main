@@ -1,6 +1,21 @@
 #!/usr/bin/env ruby
+# Game Board
+logo_board = [['1','|','2','|','3'],['4','|','5','|','6'],['7','|','8','|','9']]
+instr_board = [['X','|',' ','|',' '],[' ','|',' ','|','O'],[' ','|',' ','|',' ']]
+
+def print_game_board(board)
+  for row in board
+    print "".center(15)
+    for column in row
+      print column
+    end
+    puts
+  end
+end
+
 puts 'TIC-TAC-TOE GAME'.center(40)
 puts 'Developed by Elbie and Rafael'.center(40)
+print_game_board(logo_board)
 puts
 puts 'Do you want to play?'
 puts 'Type Y for Yes and Type N for No'
@@ -21,7 +36,25 @@ while true
   else
     p 'Wrong option! Please select Y or N.'
   end
-  
+end
+
+print "Players' move should correspond to number positions in the board shown above.\n\n"
+puts "e.g if player is X and plays 1, X is placed in position 1"
+puts "e.g if player is O and plays 6, O is placed in position 6"
+print_game_board(instr_board)
+puts 'Do you want to continue?'
+puts 'Type Y for Yes and Type N for No'
+while true
+  option = gets.chomp()
+  option.capitalize!
+  if option === 'Y'
+    break
+  elsif option === 'N' 
+    p 'Thank you. See you next time.'
+    exit
+  else
+    p 'Wrong option! Please select Y or N.'
+  end
 end
 
 # Game started - It asks for the Players Names.
@@ -34,8 +67,12 @@ player_two = gets.chomp()
 # Description of player & Pieces to take
 
 print "\nThe game will be #{player_one} versus #{player_two}\n"
-print "#{player_one} is X and #{player_two} is O \n\n"
 
+
+
+
+
+=begin
 # Dummy gameloop : Asks both players for moves until winner is found
 # NOTE: This loop does not consist of any game logic
 has_won = true
@@ -48,5 +85,4 @@ while has_won
   count += 1
   has_won = false if count == 5
 end
-
-p "DRAW game....Thank you for playing"
+=end
