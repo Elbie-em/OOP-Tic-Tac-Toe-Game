@@ -1,6 +1,9 @@
 #!/usr/bin/env ruby
-# Game Board
-
+# rubocop:disable Style/CaseEquality
+# rubocop:disable Metrics/CyclomaticComplexity
+# rubocop:disable Metrics/MethodLength
+# rubocop:disable Style/GlobalVars
+# Game Boards
 logo_board = [['1', '|', '2', '|', '3'], ['4', '|', '5', '|', '6'], ['7', '|', '8', '|', '9']]
 instr_board = [['X', '|', ' ', '|', ' '], [' ', '|', ' ', '|', 'O'], [' ', '|', ' ', '|', ' ']]
 game_board = [[' ', '|', ' ', '|', ' '], [' ', '|', ' ', '|', ' '], [' ', '|', ' ', '|', ' ']]
@@ -116,3 +119,8 @@ loop do
   print_game_board(game_board)
   break
 end
+
+# rubocop:enable Style/CaseEquality
+# rubocop:enable Metrics/CyclomaticComplexity
+# rubocop:enable Metrics/MethodLength
+# rubocop:enable Style/GlobalVars
