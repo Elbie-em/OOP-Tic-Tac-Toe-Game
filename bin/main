@@ -71,7 +71,7 @@ end
 def position_filled?(board,position)
   if board[position] == ' ' || board[position] == '' || board[position] == nil 
     return false
-    else
+  else
     return true
   end
 end
@@ -84,8 +84,7 @@ def in_range(move)
     end
     break if move.between?("0","8")
   end
-  move = move.to_i
-  move
+  move.to_i
 end
 
 def is_valid(move)
@@ -100,7 +99,7 @@ def is_valid(move)
   move
 end
 
-def check_position(board,move,player)
+def check_position(board, move, player)
   loop do
     if  position_filled?(board,move)
         puts puts "#{player}, that position is filled, Try again..."
@@ -109,6 +108,7 @@ def check_position(board,move,player)
     end
     break if !position_filled?(board,move)
   end
+  move
 end
 
 puts 'TIC-TAC-TOE GAME'.center(40)
@@ -156,11 +156,13 @@ loop do
   #check if move is invalid
   is_valid(p1_move)
   #check if board position is taken
-  check_position(game_board,p1_move,$player_one)
+  p1_move = check_position(game_board, p1_move, $player_one)
   #place X
   player_turn(game_board,p1_move,$player_one)
   print_game_board(game_board)
-
+  puts puts
+  puts "here we are"
+  puts puts
   #PLAYER TWO TURN
   p "#{$player_two}'s move"
   p2_move = gets.chomp
@@ -168,9 +170,9 @@ loop do
   #check if move is invalid
   is_valid(p2_move)
   #check if board position is taken
-  check_position(game_board,p1_move,$player_two)
+  p2_move = check_position(game_board,p2_move,$player_two)
   #place X
-  player_turn(game_board,p2_move,$player_two)
+  player_turn(game_board, p2_move, $player_two)
   print_game_board(game_board)
 end
 
