@@ -3,10 +3,10 @@
 # rubocop:disable Metrics/CyclomaticComplexity
 # rubocop:disable Metrics/MethodLength
 # rubocop:disable Style/GlobalVars
+
 # Game Boards
 logo_board = ['0','1', '2', '3', '4', '5', '6', '7', '8']
-instr_board =['X', ' ', ' ', ' ', ' ', 'O', ' ', ' ', ' ']
-game_board = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+instr_board = ['X', ' ', ' ', ' ', ' ', 'O', ' ', ' ', ' ']
 
 def print_game_board(board)
   puts " #{board[0]}|#{board[1]}|#{board[2]}".center(38)
@@ -111,6 +111,36 @@ def check_position(board, move, player)
   move
 end
 
+def won(board)
+  p1_move = []
+  p2_move = []
+
+  first_cmbn = [0, 1, 2]
+  second_cmbn = [3, 4, 5]
+  third_cmbn = [6, 7, 8]
+  fourth_cmbn = [0, 3, 6]
+  fifth_cmbn = [1, 4, 7]
+  sixth_cmbn = [2, 5, 8]
+  seventh_cmbn = [0, 4, 8]
+  eighth_cmbn = [2, 4, 6]
+
+  board.each_with_index do |i, index|
+    p1_move << index if i == 'X'
+    p2_move << index if i == 'O'
+  end
+
+  if (first_cmbn - p1_move).empty? || (second_cmbn - p1_move).empty? || (third_cmbn - p1_move).empty? || (fourth_cmbn - p1_move).empty? || (fifth_cmbn - p1_move).empty? || (sixth_cmbn - p1_move).empty? || (seventh_cmbn - p1_move).empty? || (eighth_cmbn - p1_move).empty? 
+    return 1
+  elsif (first_cmbn - p2_move).empty? || (second_cmbn - p2_move).empty? || (third_cmbn - p2_move).empty? || (fourth_cmbn - p2_move).empty? || (fifth_cmbn - p2_move).empty? || (sixth_cmbn - p2_move).empty? || (seventh_cmbn - p2_move).empty? || (eighth_cmbn - p2_move).empty?
+    return 2
+  else
+    return 0
+  end
+end
+
+
+
+
 puts 'TIC-TAC-TOE GAME'.center(40)
 puts 'Developed by Elbie and Rafael'.center(40)
 print_game_board(logo_board)
@@ -146,36 +176,59 @@ $player_two = gets.chomp
 
 print "\nThe game will be #{$player_one} versus #{$player_two}\n"
 
-print_game_board(game_board)
-
 loop do
-  p "#{$player_one}'s move"
-  p1_move = gets.chomp
-  #check if move in range
-  p1_move = in_range(p1_move)
-  #check if move is invalid
-  is_valid(p1_move)
-  #check if board position is taken
-  p1_move = check_position(game_board, p1_move, $player_one)
-  #place X
-  player_turn(game_board,p1_move,$player_one)
+  game_board = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
   print_game_board(game_board)
-  puts puts
-  puts "here we are"
-  puts puts
-  #PLAYER TWO TURN
-  p "#{$player_two}'s move"
-  p2_move = gets.chomp
-  p2_move = in_range(p2_move)
-  #check if move is invalid
-  is_valid(p2_move)
-  #check if board position is taken
-  p2_move = check_position(game_board,p2_move,$player_two)
-  #place X
-  player_turn(game_board, p2_move, $player_two)
-  print_game_board(game_board)
-end
+  count = 0
+  loop do
+    p "#{$player_one}'s move"
+    p1_move = gets.chomp
+    #check if move in range
+    p1_move = in_range(p1_move)
+    #check if move is invalid
+    is_valid(p1_move)
+    #check if board position is taken
+    p1_move = check_position(game_board, p1_move, $player_one)
+    #place X
+    player_turn(game_board,p1_move,$player_one)
+    print_game_board(game_board)
+    count += 1
+    break if won(game_board) == 1 || count == 9
+    #PLAYER TWO TURN
+    p "#{$player_two}'s move"
+    p2_move = gets.chomp
+    p2_move = in_range(p2_move)
+    #check if move is invalid
+    is_valid(p2_move)
+    #check if board position is taken
+    p2_move = check_position(game_board,p2_move,$player_two)
+    #place X
+    player_turn(game_board, p2_move, $player_two)
+    print_game_board(game_board)
+    count += 1
+    break if won(game_board) == 2 || count == 9
+  end
 
+  case won(game_board)
+  when 1 
+    p "#{$player_one} has won"
+    puts
+    print_game_board(game_board)
+  when 2
+    p "#{player_two} has won"
+    puts
+    print_game_board(game_board)
+  when 0
+    p "match draw!"
+    puts
+    print_game_board(game_board)
+  end
+
+  puts "Do you want to play another round?"
+  continue_option = gets.chomp
+  choose_option(continue_option)
+  puts
+end
 # rubocop:enable Style/CaseEquality
 # rubocop:enable Metrics/CyclomaticComplexity
 # rubocop:enable Metrics/MethodLength
