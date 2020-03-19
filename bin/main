@@ -4,37 +4,41 @@
 # rubocop:disable Metrics/MethodLength
 # rubocop:disable Style/GlobalVars
 # Game Boards
-logo_board = [['1', '|', '2', '|', '3'], ['4', '|', '5', '|', '6'], ['7', '|', '8', '|', '9']]
-instr_board = [['X', '|', ' ', '|', ' '], [' ', '|', ' ', '|', 'O'], [' ', '|', ' ', '|', ' ']]
-game_board = [[' ', '|', ' ', '|', ' '], [' ', '|', ' ', '|', ' '], [' ', '|', ' ', '|', ' ']]
+logo_board = ['0','1', '2', '3', '4', '5', '6', '7', '8']
+instr_board =['X', ' ', ' ', ' ', ' ', 'O', ' ', ' ', ' ']
+game_board = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
 
 def print_game_board(board)
-  board.each do |row|
-    print ''.center(15)
-    row.each do |column|
-      print column
-    end
-    puts
-  end
+  puts " #{board[0]}|#{board[1]}|#{board[2]}".center(38)
+  puts " #{board[3]}|#{board[4]}|#{board[5]}".center(38)
+  puts " #{board[6]}|#{board[7]}|#{board[8]}".center(38)
 end
 
 def choose_option(option)
   loop do
     option.capitalize!
     if option === 'Y'
-      p 'Game is ON!'
+      count = 0
+      print 'Loading'
+      while count < 10
+      print '.'
+      count += 1
+      sleep(0.1)
+      end
       break
     elsif option === 'N'
       p 'Thank you. See you next time.'
       exit
     else
       p 'Wrong option! Please select Y or N.'
+      option = gets.chomp
     end
+    break if option === "Y"
   end
 end
 
 def player_turn(board, index, player)
-  param = ''
+  param = String.new
 
   if player === $player_one
     param = 'X'
@@ -43,29 +47,68 @@ def player_turn(board, index, player)
   end
 
   case index
+  when 0
+    board[0] = param
   when 1
-    board[0][0] = param
+    board[1] = param
   when 2
-    board[0][2] = param
+    board[2] = param
   when 3
-    board[0][4] = param
+    board[3] = param
   when 4
-    board[1][0] = param
+    board[4] = param
   when 5
-    board[1][2] = param
+    board[5] = param
   when 6
-    board[1][4] = param
+    board[6] = param
   when 7
-    board[2][0] = param
+    board[7] = param
   when 8
-    board[2][2] = param
-  when 9
-    board[2][4] = param
+    board[8] = param
+  end
+end 
+
+def position_filled?(board,position)
+  if board[position] == ' ' || board[position] == '' || board[position] == nil 
+    return false
+    else
+    return true
   end
 end
 
-def test_play?(play_made)
-  play_made >= 1 && play_made <= 9 ? true : false
+def in_range(move)
+  loop do
+    if !move.between?("0","8")
+      puts "Please enter a number in range of 0-8"
+      move = gets.chomp
+    end
+    break if move.between?("0","8")
+  end
+  move = move.to_i
+  move
+end
+
+def is_valid(move)
+  loop do
+    if move.class != Integer || !move.between?(0,8)
+      puts "Invalid move, enter number in range of 0-8"
+      move = gets.chomp
+      move = in_range(move)
+    end
+    break if move.class == Integer && move.between?(0,8)
+  end
+  move
+end
+
+def check_position(board,move,player)
+  loop do
+    if  position_filled?(board,move)
+        puts puts "#{player}, that position is filled, Try again..."
+        move = gets.chomp
+        move = in_range(move)
+    end
+    break if !position_filled?(board,move)
+  end
 end
 
 puts 'TIC-TAC-TOE GAME'.center(40)
@@ -82,7 +125,7 @@ choose_option(starting_option)
 # The program will keep asking for an option that is valid
 # either to start the game or to end it.
 
-print "Players' move should correspond to number positions in the board shown above.\n\n"
+print "\nPlayers' move should correspond to number positions in the board shown above.\n\n"
 puts 'e.g if player is X and plays 1, X is placed in position 1'
 puts 'e.g if player is O and plays 6, O is placed in position 6'
 print_game_board(instr_board)
@@ -93,31 +136,42 @@ continue_option = gets.chomp
 choose_option(continue_option)
 
 # Game started - It asks for the Players Names.
-
+puts ""
 puts 'Player, what is your name?'
 $player_one = gets.chomp
 puts 'What is the name of your rival?'
 $player_two = gets.chomp
 
-# Description of player & Pieces to take
+# print_game_boards to take
 
 print "\nThe game will be #{$player_one} versus #{$player_two}\n"
 
 print_game_board(game_board)
 
 loop do
-  p 'Player one move'
-  p1_move = Integer(gets.chomp)
-  p test_play?(p1_move) ? '' : 'Invalid Move'
+  p "#{$player_one}'s move"
+  p1_move = gets.chomp
+  #check if move in range
+  p1_move = in_range(p1_move)
+  #check if move is invalid
+  is_valid(p1_move)
+  #check if board position is taken
+  check_position(game_board,p1_move,$player_one)
+  #place X
+  player_turn(game_board,p1_move,$player_one)
+  print_game_board(game_board)
 
-  player_turn(game_board, p1_move, $player_one)
+  #PLAYER TWO TURN
+  p "#{$player_two}'s move"
+  p2_move = gets.chomp
+  p2_move = in_range(p2_move)
+  #check if move is invalid
+  is_valid(p2_move)
+  #check if board position is taken
+  check_position(game_board,p1_move,$player_two)
+  #place X
+  player_turn(game_board,p2_move,$player_two)
   print_game_board(game_board)
-  p 'Player two move'
-  p2_move = Integer(gets.chomp)
-  p test_play?(p2_move) ? '' : 'Invalid Move'
-  player_turn(game_board, p2_move, $player_two)
-  print_game_board(game_board)
-  break
 end
 
 # rubocop:enable Style/CaseEquality
