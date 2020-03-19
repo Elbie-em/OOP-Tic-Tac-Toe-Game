@@ -64,6 +64,14 @@ def player_turn(board, index, player)
   end
 end
 
+def won?
+  false
+end
+
+def move_done?
+  false
+end
+
 def test_play?(play_made)
   play_made >= 1 && play_made <= 9 ? true : false
 end
@@ -104,21 +112,47 @@ $player_two = gets.chomp
 print "\nThe game will be #{$player_one} versus #{$player_two}\n"
 
 print_game_board(game_board)
-
+count = 0
 loop do
   p 'Player one move'
   p1_move = Integer(gets.chomp)
-  p test_play?(p1_move) ? '' : 'Invalid Move'
-
+  p 'Checking if move is valid'
+  p 'Invalid Move! Try Again' unless test_play?(p1_move)
+  p 'This move has already been done! Try Again!' if move_done?
   player_turn(game_board, p1_move, $player_one)
   print_game_board(game_board)
+  p won? ? "#{$player_one} has won!" : ''
+  count += 1
+  break if count == 9
+
   p 'Player two move'
   p2_move = Integer(gets.chomp)
-  p test_play?(p2_move) ? '' : 'Invalid Move'
+  p 'Checking if move is valid'
+  p 'Invalid Move! Try Again' if test_play?(p2_move)
+  p 'This move has already been done! Try Again!' if move_done?
   player_turn(game_board, p2_move, $player_two)
   print_game_board(game_board)
-  break
+  p won? ? "#{$player_two} has won!" : ''
+
+  count += 1
+  break if count == 9
 end
+# The logic will set 0 if it is a draw, 1 if player_one won and 2 if player_two won
+# In the example, the match will draw, so:
+
+winner = 0
+
+case winner
+when 0
+  p 'Match Draw!'
+when 1
+  p "#{$player_one} has won this round!"
+when 2
+  p "#{$player_two} has won this round!"
+end
+
+puts 'Would you like another round? Y or N?'
+choose_option('N')
 
 # rubocop:enable Style/CaseEquality
 # rubocop:enable Metrics/CyclomaticComplexity
