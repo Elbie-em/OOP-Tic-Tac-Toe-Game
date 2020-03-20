@@ -60,7 +60,7 @@ class Game
     move.to_i
   end
 
-  def is_valid(move)
+  def valid?(move)
     loop do
       if move.class != Integer || !move.between?(0, 8)
         puts 'Invalid move, enter number in range of 0-8'
@@ -153,7 +153,7 @@ class Game
         # check if move in range
         p1_move = in_range(p1_move)
         # check if move is invalid
-        is_valid(p1_move)
+        valid?(p1_move)
         # check if board position is taken
         p1_move = check_position(@board, p1_move, @players[0])
         # place X
@@ -167,7 +167,7 @@ class Game
         p2_move = gets.chomp
         p2_move = in_range(p2_move)
         # check if move is invalid
-        is_valid(p2_move)
+        valid?(p2_move)
         # check if board position is taken
         p2_move = check_position(@board, p2_move, @players[1])
         # place X

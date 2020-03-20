@@ -2,12 +2,12 @@ class Board
   def initialize; end
 
   # method returns different boards available for game play
-  def game_board(a)
-    if a == 1
+  def game_board(which_board)
+    if which_board == 1
       game_board = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
-    elsif a == 2
+    elsif which_board == 2
       instr_board = ['X', ' ', ' ', ' ', ' ', 'O', ' ', ' ', ' ']
-    elsif a == 3
+    elsif which_board == 3
       logo_board = %w[0 1 2 3 4 5 6 7 8]
     else
       p 'Error'
