@@ -215,7 +215,7 @@ loop do
     puts
     print_game_board(game_board)
   when 2
-    p "#{player_two} has won"
+    p "#{$player_two} has won"
     puts
     print_game_board(game_board)
   when 0
