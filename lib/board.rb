@@ -1,18 +1,16 @@
 class Board
+  def initialize; end
 
-  def initialize
-  end
-
-  #method returns different boards available for game play
+  # method returns different boards available for game play
   def game_board(a)
     if a == 1
-    game_board = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+      game_board = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
     elsif a == 2
       instr_board = ['X', ' ', ' ', ' ', ' ', 'O', ' ', ' ', ' ']
     elsif a == 3
-      logo_board = ['0','1', '2', '3', '4', '5', '6', '7', '8']
+      logo_board = %w[0 1 2 3 4 5 6 7 8]
     else
-      p "Error"
+      p 'Error'
     end
   end
 
@@ -22,5 +20,4 @@ class Board
     puts " #{board[3]}|#{board[4]}|#{board[5]}".center(38)
     puts " #{board[6]}|#{board[7]}|#{board[8]}".center(38)
   end
-
 end

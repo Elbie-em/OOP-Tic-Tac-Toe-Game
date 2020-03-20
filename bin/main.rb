@@ -1,7 +1,6 @@
-require_relative 'player.rb'
-require_relative 'game.rb'
-require_relative 'board.rb'
-
+require_relative '../lib/player.rb'
+require_relative '../lib/game.rb'
+require_relative '../lib/board.rb'
 
 board = Board.new
 puts 'TIC-TAC-TOE GAME'.center(40)
@@ -16,15 +15,15 @@ player_two_name = gets.chomp
 
 player_one = Player.new(player_one_name)
 player_two = Player.new(player_two_name)
-players = [player_one,player_two]
+players = [player_one, player_two]
 
 puts "Thank you, game is player #{players[0].name} vs #{players[1].name}"
-puts ""
+puts ''
 puts 'Play Now?'
-puts ""
+puts ''
 puts 'Type Y for Yes and Type N for No'
 option = gets.chomp
-game = Game.new(board.game_board(1),players)
+game = Game.new(board.game_board(1), players)
 game.choose_option(option)
 
 print "\nPlayers' move should correspond to number positions in the board shown above.\n\n"
@@ -36,4 +35,4 @@ puts 'Type Y for Yes and Type N for No'
 option = gets.chomp
 game.choose_option(option)
 puts
-game.play()
+game.play
