@@ -1,0 +1,110 @@
+#!/usr/bin/env ruby
+require_relative '../lib/player.rb'
+require_relative '../lib/game.rb'
+require_relative '../lib/board.rb'
+# rubocop:disable Naming/MethodParameterName
+# rubocop:disable Metrics/BlockLength
+
+puts
+
+def print_game_board(board)
+  puts " #{board[0]}|#{board[1]}|#{board[2]}".center(38)
+  puts " #{board[3]}|#{board[4]}|#{board[5]}".center(38)
+  puts " #{board[6]}|#{board[7]}|#{board[8]}".center(38)
+end
+
+def play_pop_up(p1 = nil, p2 = nil)
+  loop do
+    option = gets.chomp
+    option.capitalize!
+    case option
+    when 'Y'
+      return true
+    when 'N'
+      puts "The Result is: #{p1.name}(#{p1.count}) x #{p2.name}(#{p2.count})" if !p1.nil? && !p2.nil?
+      exit
+    else
+      puts 'Invalid Option, Please Select Y of N'
+    end
+  end
+end
+
+puts 'TIC-TAC-TOE GAME'.center(40)
+puts 'Developed by Elbie Moonga and Rafael Nazario'.center(40)
+print "Please enter the name of the players\n\n"
+print_game_board(Board.logo)
+puts
+puts 'Would You Like Playing a Game?'.center(40)
+play_pop_up
+
+puts 'Player One:'
+player_one = Player.new(gets.chomp)
+puts 'Player Two:'
+player_two = Player.new(gets.chomp)
+
+tic_tac = Board.new
+# loop for the whole game
+loop do
+  tic_tac.clear_board
+  count = 0
+  # loop for a match
+  loop do
+    # loop for p1 move
+    loop do
+      puts "#{player_one.name}, what is your move?"
+      p1_move = gets.chomp
+      p Game.valid?(p1_move)
+      if Game.valid?(p1_move) && Game.possible?(tic_tac.board, p1_move)
+        # apply move and break loop
+        Board.make_move(tic_tac.board, p1_move, 'X')
+        count += 1
+        break
+      elsif !Game.valid?(p1_move)
+        puts 'This is an invalid move! Please select an index between 1 and 9'
+      elsif !Game.possible?(tic_tac.board, p1_move)
+        puts 'This move has been already done! Try another move'
+      end
+    end
+
+    break if Game.winner?(tic_tac.board) != 0 || count == 9
+
+    print_game_board(tic_tac.board)
+
+    loop do # loop for p2 move
+      puts "#{player_two.name}, what is your move?"
+      p2_move = gets.chomp
+      if Game.valid?(p2_move) && Game.possible?(tic_tac.board, p2_move)
+        # apply move and break loop
+        Board.make_move(tic_tac.board, p2_move, 'O')
+        count += 1
+        break
+      elsif !Game.valid?(p2_move)
+        puts 'This is an invalid move! Please select an index between 1 and 9'
+      elsif !Game.possible?(tic_tac.board, p2_move)
+        puts 'This move has been already done! Try another move'
+      end
+    end
+
+    break if Game.winner?(tic_tac.board) != 0 || count == 9
+
+    print_game_board(tic_tac.board)
+  end
+  puts
+  won = Game.winner?(tic_tac.board)
+  if won == 1
+    player_one.update_wins
+    puts "#{player_one.name} has won this round!".center(40)
+  elsif won == 2
+    player_two.update_wins
+    puts "#{player_two.name} has won this round!".center(40)
+  else
+    puts 'Match Drawn!'.center(40)
+  end
+  print_game_board(tic_tac.board)
+  puts puts
+  puts 'Would You Lke Another Round?'
+  play_pop_up(player_one, player_two)
+end
+
+# rubocop:enable Naming/MethodParameterName
+# rubocop:enable Metrics/BlockLength
