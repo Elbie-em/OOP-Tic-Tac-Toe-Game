@@ -39,21 +39,24 @@ Note: The goal is to be the first to place pieces in the orders mentioned, below
 
 ## Getting Started
 
-**The project was designed to test our capalities of creating Algorithms with Ruby**
+**The project was designed to test capalities of implementing Object Oriented Program using Ruby**
+- **Ruby Enviroment**: if you do not have ruby installed visit this [link](https://www.ruby-lang.org/en/documentation/installation/) to install
 
-## Authors
+- **Terminal(Mac & Linux) or Command Prompt(Windows)**: run the main file located in the bin folder *$ ruby main*
 
-👤 **Rafael Nazario**
-
-- Github: [@rsnazario](https://github.com/rsnazario)
-- Twitter: [@rsnazario](https://twitter.com/rsnazario)
-- Linkedin: [Rafael Nazario](https://www.linkedin.com/in/rafael-nazario-692b8293/) 
+## Authors ![Hireable](https://img.shields.io/badge/HIREABLE-YES-yellowgreen&?style=for-the-badge)
 
 👤 **Elbie Moonga**
 
 - GitHub: [@Elbie-Em](https://github.com/Elbie-em)
 - Twitter: [ElbieEm](https://twitter.com/ElbieEm)
 - LinkedIn: [elbie-moonga](https://www.linkedin.com/in/elbie-moonga-253bbb12b/)
+
+👤 **Rafael Nazario**
+
+- Github: [@rsnazario](https://github.com/rsnazario)
+- Twitter: [@rsnazario](https://twitter.com/rsnazario)
+- Linkedin: [Rafael Nazario](https://www.linkedin.com/in/rafael-nazario-692b8293/) 
 
 ## 🤝 Contributing
 
