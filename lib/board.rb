@@ -1,8 +1,10 @@
+# rubocop:disable Style/ClassVars
+
 class Board
   attr_accessor :board
   @@logo_board = %w[1 2 3 4 5 6 7 8 9]
   @@instr_board = ['X', ' ', ' ', ' ', ' ', 'O', ' ', ' ', ' ']
-  
+
   def initialize
     @board = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
   end
@@ -23,3 +25,5 @@ class Board
     table[move.to_i - 1] = mark
   end
 end
+
+# rubocop:enable Style/ClassVars
