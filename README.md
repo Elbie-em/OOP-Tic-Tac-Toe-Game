@@ -18,15 +18,15 @@ The Tic Tac Toe game is played on a board with 9 fields. The first player place 
 - Enter players names and continue
 - Selections must correspond to the numbers shown above. If user types '1' when turn reached, their piece will be placed at position one on the board
 
-  - X |   | 
-  -   |   | 
-  -   |   | 
+  - X | _ | _
+  - _ | _ | _
+  - _ | _ | _
 
 Note: The goal is to be the first to place pieces in the orders mentioned, below shows how player two wins
 
   - X | O | X
-  - X | O | 
-  -   | O | X
+  - X | O | _
+  - _ | O | X
 
 - The game prompts for a response of weather you wish to continue or not once there is a win or draw. The game exits if user wants to quit or viceversa if yes is selected
 
